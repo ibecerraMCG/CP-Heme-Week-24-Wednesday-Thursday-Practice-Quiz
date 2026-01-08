@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 24 Wednesday & Thursday Practice Quiz</title>
+    <style>
+        /* --- CSS Variables & Themes --- */
+        :root {
+            /* Base Transition */
+            --transition-speed: 0.3s;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* 1. Modern Dark (Default) */
+        [data-theme="dark"] {
+            --bg-body: #1e293b;
+            --bg-card: #334155;
+            --bg-header: #0f172a;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-accent: #38bdf8;
+            --border-color: #475569;
+            --highlight-bg: #475569;
+            --button-bg: #38bdf8;
+            --button-text: #0f172a;
+            --button-hover: #0ea5e9;
+            --feedback-success-bg: #064e3b;
+            --feedback-success-border: #059669;
+            --feedback-success-text: #a7f3d0;
+            --feedback-error-bg: #7f1d1d;
+            --feedback-error-border: #dc2626;
+            --feedback-error-text: #fecaca;
+        }
+
+        /* 2. Modern Light */
+        [data-theme="light"] {
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+            --bg-header: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --text-accent: #2563eb;
+            --border-color: #e5e7eb;
+            --highlight-bg: #f3f4f6;
+            --button-bg: #2563eb;
+            --button-text: #ffffff;
+            --button-hover: #1d4ed8;
+            --feedback-success-bg: #ecfdf5;
+            --feedback-success-border: #34d399;
+            --feedback-success-text: #065f46;
+            --feedback-error-bg: #fef2f2;
+            --feedback-error-border: #f87171;
+            --feedback-error-text: #991b1b;
+        }
+
+        /* 3. Midnight (Pure Black) */
+        [data-theme="midnight"] {
+            --bg-body: #000000;
+            --bg-card: #000000;
+            --bg-header: #000000;
+            --text-main: #e0e0e0;
+            --text-muted: #888888;
+            --text-accent: #90caf9;
+            --border-color: #333333;
+            --highlight-bg: #1a1a1a;
+            --button-bg: #90caf9;
+            --button-text: #000000;
+            --button-hover: #42a5f5;
+            --feedback-success-bg: #051b11;
+            --feedback-success-border: #0f5132;
+            --feedback-success-text: #75b798;
+            --feedback-error-bg: #2c0b0e;
+            --feedback-error-border: #842029;
+            --feedback-error-text: #ea868f;
+        }
+
+        /* 4. Legacy Dark (Original) */
+        [data-theme="legacy-dark"] {
+            --bg-body: #2d343e;
+            --bg-card: #3c424f;
+            --bg-header: #3c424f;
+            --text-main: #e8e6e3;
+            --text-muted: #b0c4de;
+            --text-accent: #8ab4f8;
+            --border-color: #555;
+            --highlight-bg: #454c5a;
+            --button-bg: #8ab4f8;
+            --button-text: #202124;
+            --button-hover: #a3c5f9;
+            --feedback-success-bg: #344e41;
+            --feedback-success-border: #52b788;
+            --feedback-success-text: #c7f9cc;
+            --feedback-error-bg: #5e2129;
+            --feedback-error-border: #a4133c;
+            --feedback-error-text: #f8d7da;
+        }
+
+        /* 5. Sepia (Reading Mode) */
+        [data-theme="sepia"] {
+            --bg-body: #f4ecd8;
+            --bg-card: #fdf6e3;
+            --bg-header: #e4d5b7;
+            --text-main: #433422;
+            --text-muted: #7c6f5a;
+            --text-accent: #a05a2c;
+            --border-color: #d3c4a5;
+            --highlight-bg: #ebe1c9;
+            --button-bg: #a05a2c;
+            --button-text: #fdf6e3;
+            --button-hover: #864822;
+            --feedback-success-bg: #e6f4ea;
+            --feedback-success-border: #8ab893;
+            --feedback-success-text: #2e4c35;
+            --feedback-error-bg: #f9e3e3;
+            --feedback-error-border: #d48f8f;
+            --feedback-error-text: #5c2b2b;
+        }
+
+        /* 6. High Contrast */
+        [data-theme="contrast"] {
+            --bg-body: #000000;
+            --bg-card: #000000;
+            --bg-header: #000000;
+            --text-main: #ffffff;
+            --text-muted: #dddddd;
+            --text-accent: #ffff00;
+            --border-color: #ffffff;
+            --highlight-bg: #333333;
+            --button-bg: #ffff00;
+            --button-text: #000000;
+            --button-hover: #e6e600;
+            --feedback-success-bg: #000000;
+            --feedback-success-border: #00ff00;
+            --feedback-success-text: #00ff00;
+            --feedback-error-bg: #000000;
+            --feedback-error-border: #ff0000;
+            --feedback-error-text: #ff0000;
+        }
+
+        /* --- Global Reset & Layout --- */
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-main);
+            margin: 0;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            line-height: 1.6;
+        }
+
+        /* --- Header --- */
+        header {
+            background-color: var(--bg-header);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* Default to Sticky */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Class to remove sticky behavior */
+        header.unpinned {
+            position: relative;
+            box-shadow: none;
+        }
+
+        header h1 {
+            font-size: 1.25rem;
+            margin: 0;
+            color: var(--text-accent);
+        }
+
+        .controls-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .pin-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .pin-btn:hover {
+            background-color: var(--highlight-bg);
+        }
+
+        .pin-btn.pin-active {
+            color: var(--text-accent);
+            border-color: var(--text-accent);
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        select#theme-select {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* --- Main Content --- */
+        .container {
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 0 1rem 4rem 1rem;
+        }
+
+        .section-header {
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--text-accent);
+            color: var(--text-accent);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* --- Question Card --- */
+        .question-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .lo-box {
+            background-color: var(--highlight-bg);
+            border-left: 4px solid var(--text-accent);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Options --- */
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: var(--highlight-bg);
+            border-color: var(--text-muted);
+        }
+
+        .option-label input {
+            margin-top: 0.3rem;
+            margin-right: 1rem;
+            accent-color: var(--text-accent);
+            transform: scale(1.2);
+        }
+
+        /* --- Buttons --- */
+        .btn-check {
+            margin-top: 1.5rem;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            font-size: 1rem;
+        }
+
+        .btn-check:hover {
+            opacity: 0.9;
+        }
+
+        /* --- Feedback Area --- */
+        .feedback {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: none; /* Hidden by default */
+            border: 1px solid transparent;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback.correct {
+            background-color: var(--feedback-success-bg);
+            border-color: var(--feedback-success-border);
+            color: var(--feedback-success-text);
+        }
+
+        .feedback.incorrect {
+            background-color: var(--feedback-error-bg);
+            border-color: var(--feedback-error-border);
+            color: var(--feedback-error-text);
+        }
+
+        .feedback-header {
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .rationale {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .source {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            opacity: 0.8;
+            font-style: italic;
+            border-top: 1px dashed currentColor;
+            padding-top: 0.5rem;
+        }
+
+        /* --- Mobile Tweaks --- */
+        @media (max-width: 600px) {
+            header { padding: 1rem; flex-direction: column; gap: 10px; align-items: flex-start; }
+            .controls-wrapper { width: 100%; justify-content: space-between; }
+            .question-card { padding: 1.5rem; }
+            header h1 { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <h1>Week 24 Wednesday & Thursday Practice Quiz</h1>
+        <div class="controls-wrapper">
+            <!-- Pin Button -->
+            <button class="pin-btn pin-active" id="pin-btn" onclick="toggleHeader()" title="Pin/Unpin Header">
+                📌
+            </button>
+            
+            <div class="theme-control">
+                <label for="theme-select">Theme:</label>
+                <select id="theme-select" onchange="changeTheme(this.value)">
+                    <option value="dark">Modern Dark</option>
+                    <option value="midnight">Midnight</option>
+                    <option value="light">Modern Light</option>
+                    <option value="legacy-dark">Legacy Dark</option>
+                    <option value="sepia">Sepia</option>
+                    <option value="contrast">High Contrast</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" id="quiz-root">
+        <!-- Content injected via JS -->
+    </div>
+
+    <script>
+        // --- Data ---
+        const quizData = [
+            // --- Hemoglobinopathies ---
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO1: State the composition of normal hemoglobin at various stages of development and explain the oxygen binding properties of fetal and adult hemoglobin.",
+                fullLO: "LO1: State the composition of normal hemoglobin at various stages of development and explain the oxygen binding properties of fetal and adult hemoglobin. (Hemoglobinopathies)",
+                question: "A researcher is studying the hemoglobin composition of blood samples taken from a fetus at 20 weeks of gestation. The predominant hemoglobin type found in the sample is composed of two alpha chains and two gamma chains. This specific hemoglobin structure is essential during fetal development primarily because it allows for:",
+                options: {
+                    A: "Higher oxygen affinity than maternal hemoglobin",
+                    B: "Prevention of sickling in low oxygen tension",
+                    C: "Lower oxygen affinity to facilitate oxygen release to tissues",
+                    D: "Resistance to degradation by 2,3-BPG",
+                    E: "Increased flexibility of the red blood cell membrane"
+                },
+                correctAnswer: "A",
+                rationale: "Fetal hemoglobin (Hb F) is composed of two alpha and two gamma chains. Physiologically, Hb F has a higher affinity for oxygen than adult hemoglobin (Hb A) to facilitate the transfer of oxygen from the mother to the fetus across the placenta.",
+                source: "Hemoglobinopathies, Slide 3: \"Hb F (a2g2) < 1.0% [in adult] 80-85% [in fetal]\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO1: State the composition of normal hemoglobin at various stages of development and explain the oxygen binding properties of fetal and adult hemoglobin.",
+                fullLO: "LO1: State the composition of normal hemoglobin at various stages of development and explain the oxygen binding properties of fetal and adult hemoglobin. (Hemoglobinopathies)",
+                question: "A healthy 25-year-old male donates blood. Electrophoresis of his hemoglobin is performed to establish baseline reference ranges for a study. Which of the following hemoglobin compositions is expected to make up approximately 96-98% of the hemoglobin in this healthy adult subject?",
+                options: {
+                    A: "α2γ2",
+                    B: "α2δ2",
+                    C: "α2β2",
+                    D: "ζ2ε2",
+                    E: "α2ε2"
+                },
+                correctAnswer: "C",
+                rationale: "In a normal adult, the vast majority of hemoglobin (96-98%) is Hemoglobin A, which consists of two alpha chains and two beta chains.",
+                source: "Hemoglobinopathies, Slide 3: \"Hb A (a2b2) 96-98% [Adult]\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO1: State the composition of normal hemoglobin at various stages of development and explain the oxygen binding properties of fetal and adult hemoglobin.",
+                fullLO: "LO1: State the composition of normal hemoglobin at various stages of development and explain the oxygen binding properties of fetal and adult hemoglobin. (Hemoglobinopathies)",
+                question: "During the first few weeks of embryonic development, oxygen transport is managed by specific embryonic hemoglobins before the transition to fetal hemoglobin occurs. Which of the following tetramers represents a normal embryonic hemoglobin known as Hb Gower-1?",
+                options: {
+                    A: "α2β2",
+                    B: "ζ2ε2",
+                    C: "α2γ2",
+                    D: "ζ2γ2",
+                    E: "α2δ2"
+                },
+                correctAnswer: "B",
+                rationale: "Hb Gower-1 is an embryonic hemoglobin composed of two zeta chains and two epsilon chains (ζ2ε2).",
+                source: "Hemoglobinopathies, Slide 3: \"Embryonic Hbs: Hb Gower-1 (x2e2)\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO2: Define hemoglobinopathy, list the qualitative and quantitative types of hemoglobinopathies and explain the genetic basis underlying these types of hemoglobinopathies.",
+                fullLO: "LO2: Define hemoglobinopathy, list the qualitative and quantitative types of hemoglobinopathies and explain the genetic basis underlying these types of hemoglobinopathies. (Hemoglobinopathies)",
+                question: "A 6-year-old boy presents with fatigue and microcytic anemia. Genetic testing reveals a deletion of genes on chromosome 16. This type of genetic alteration, which results in a decrease or absence of globin chain production, is best classified as which of the following?",
+                options: {
+                    A: "Qualitative Hemoglobinopathy",
+                    B: "Quantitative Thalassemia",
+                    C: "Missense Mutation Variant",
+                    D: "Structural Hemoglobin Variant",
+                    E: "Non-deletional Hemoglobinopathy"
+                },
+                correctAnswer: "B",
+                rationale: "Thalassemias are quantitative disorders characterized by the decrease or absence of production of one or more globin chains. In this case, deletions on chromosome 16 (where alpha genes are located) typify alpha-thalassemia.",
+                source: "Hemoglobinopathies, Slide 7: \"Quantitative – Thalassemias Decrease or absence of production of one or more globin chains\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO2: Define hemoglobinopathy, list the qualitative and quantitative types of hemoglobinopathies and explain the genetic basis underlying these types of hemoglobinopathies.",
+                fullLO: "LO2: Define hemoglobinopathy, list the qualitative and quantitative types of hemoglobinopathies and explain the genetic basis underlying these types of hemoglobinopathies. (Hemoglobinopathies)",
+                question: "A patient is diagnosed with Sickle Cell Disease. The underlying molecular mechanism involves a single nucleotide substitution (GAG→GTG) resulting in a valine replacing glutamic acid at the 6th position of the beta-globin chain. This type of defect is best categorized as:",
+                options: {
+                    A: "A quantitative defect",
+                    B: "A promoter region mutation",
+                    C: "A qualitative Hb variant",
+                    D: "A gene deletion",
+                    E: "An mRNA processing defect"
+                },
+                correctAnswer: "C",
+                rationale: "Sickle Cell Disease is caused by a missense mutation that alters the structure of the hemoglobin molecule. This is a qualitative change (structural variant), as opposed to a quantitative reduction in synthesis (thalassemia).",
+                source: "Hemoglobinopathies, Slide 7: \"Qualitative – Hb Variants (missense mutations) Hb S, C, E, others\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO2: Define hemoglobinopathy, list the qualitative and quantitative types of hemoglobinopathies and explain the genetic basis underlying these types of hemoglobinopathies.",
+                fullLO: "LO2: Define hemoglobinopathy, list the qualitative and quantitative types of hemoglobinopathies and explain the genetic basis underlying these types of hemoglobinopathies. (Hemoglobinopathies)",
+                question: "Genetic analysis of the human globin genes reveals that the alpha-globin gene cluster is located on one chromosome, while the beta-globin gene cluster is located on another. On which chromosome is the gene responsible for the synthesis of the beta-globin chain located?",
+                options: {
+                    A: "Chromosome 11",
+                    B: "Chromosome 16",
+                    C: "Chromosome 21",
+                    D: "Chromosome X",
+                    E: "Chromosome 18"
+                },
+                correctAnswer: "A",
+                rationale: "The beta-globin gene cluster, which includes the genes for epsilon, gamma, delta, and beta chains, is located on chromosome 11.",
+                source: "Hemoglobinopathies, Slide 4: \"Chromosomal Organization of the Human Globin Genes... Chromosome #11... Beta-like genes\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO3: Interpret the results of hemoglobin composition analyses and use them to differentiate between the major hemoglobinopathies.",
+                fullLO: "LO3: Interpret the results of hemoglobin composition analyses and use them to differentiate between the major hemoglobinopathies. (Hemoglobinopathies)",
+                question: "A 22-year-old African American female presents for prenatal counseling. She is asymptomatic and has a normal complete blood count with a hemoglobin of 13 g/dL. Hemoglobin electrophoresis is performed, revealing the following distribution: Hb A ~55%, Hb S ~40%, Hb A2 ~2.5%, Hb F <1%. What is the most likely genotype?",
+                options: {
+                    A: "Sickle Cell Anemia (SS)",
+                    B: "Sickle Cell Trait (AS)",
+                    C: "Hemoglobin SC Disease",
+                    D: "Beta-Thalassemia Major",
+                    E: "Sickle-Beta+ Thalassemia"
+                },
+                correctAnswer: "B",
+                rationale: "The presence of both Hb A and Hb S, with Hb A being the predominant hemoglobin (typically >50%), is characteristic of the heterozygous carrier state, or Sickle Cell Trait. Homozygous SS would have no Hb A.",
+                source: "Hemoglobinopathies, Slide 11: \"Sickle Cell Anemia: Homozygous state for Hb S\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO3: Interpret the results of hemoglobin composition analyses and use them to differentiate between the major hemoglobinopathies.",
+                fullLO: "LO3: Interpret the results of hemoglobin composition analyses and use them to differentiate between the major hemoglobinopathies. (Hemoglobinopathies)",
+                question: "A 2-year-old child presents with failure to thrive and pallor. Hemoglobin electrophoresis shows 0% Hb A, 95% Hb F, and 5% Hb A2. The child requires chronic blood transfusions. Which of the following is the most likely diagnosis?",
+                options: {
+                    A: "Beta-Thalassemia Trait",
+                    B: "Beta-Thalassemia Major",
+                    C: "Alpha-Thalassemia Trait",
+                    D: "Sickle Cell Anemia",
+                    E: "Hemoglobin H Disease"
+                },
+                correctAnswer: "B",
+                rationale: "Beta-Thalassemia Major (b0) is characterized by the total absence of beta-chain production. Therefore, there is no Hb A (α2β2). The hemoglobin present is primarily fetal hemoglobin (Hb F) and some Hb A2.",
+                source: "Hemoglobinopathies, Slides 32 & 35: \"b0 Thalassemia Absence of b chain production... b Thalassemia Major... Severe transfusion dependent anemia\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO3: Interpret the results of hemoglobin composition analyses and use them to differentiate between the major hemoglobinopathies.",
+                fullLO: "LO3: Interpret the results of hemoglobin composition analyses and use them to differentiate between the major hemoglobinopathies. (Hemoglobinopathies)",
+                question: "An asymptomatic 25-year-old male is screened for thalassemia. His CBC shows a mild microcytic anemia (Hb 10.5 g/dL, MCV 65 fL). Hemoglobin electrophoresis reveals an elevated Hb A2 of 5.2% and a slightly elevated Hb F of 2%. The most likely diagnosis is:",
+                options: {
+                    A: "Iron Deficiency Anemia",
+                    B: "Alpha-Thalassemia Trait",
+                    C: "Beta-Thalassemia Trait",
+                    D: "Sickle Cell Trait",
+                    E: "Hemoglobin H Disease"
+                },
+                correctAnswer: "C",
+                rationale: "Beta-thalassemia trait (heterozygosity) is clinically asymptomatic or presents with mild anemia. The hallmark laboratory finding is an elevated Hb A2 (>3.5%) and sometimes a mild elevation in Hb F.",
+                source: "Hemoglobinopathies, Slide 34: \"b Thalassemia Trait... Mild anemia in some cases... Elevated Hb A2 (~5%)... Mildly elevated Hb F in some cases\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO4: Describe the genetic, hematologic findings, and clinical characteristics of the main structural hemoglobin variants, i.e., HbS, HbC, HbE.",
+                fullLO: "LO4: Describe the genetic, hematologic findings, and clinical characteristics of the main structural hemoglobin variants, i.e., HbS, HbC, HbE. (Hemoglobinopathies)",
+                question: "A 10-year-old male with Sickle Cell Disease presents with severe pain in his legs and back. His mother reports he was recently treated for pneumonia. Which pathophysiological process, driven by the polymerization of deoxyhemoglobin S, is the primary cause of his pain?",
+                options: {
+                    A: "Hemolysis",
+                    B: "Microvascular occlusion",
+                    C: "Splenic sequestration",
+                    D: "Aplastic crisis",
+                    E: "Megaloblastic change"
+                },
+                correctAnswer: "B",
+                rationale: "The polymerization of deoxyhemoglobin S leads to the sickling of red blood cells. These rigid cells cause microvascular occlusion (vaso-occlusion), which leads to ischemia and the characteristic pain crises (Vaso-occlusive episodes/VOE) seen in SCD.",
+                source: "Hemoglobinopathies, Slides 14 & 17: \"Sickle Cell Disease... Microvascular occlusion... Vaso-occlusion... Ischemia reperfusion injury\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO4: Describe the genetic, hematologic findings, and clinical characteristics of the main structural hemoglobin variants, i.e., HbS, HbC, HbE.",
+                fullLO: "LO4: Describe the genetic, hematologic findings, and clinical characteristics of the main structural hemoglobin variants, i.e., HbS, HbC, HbE. (Hemoglobinopathies)",
+                question: "A 28-year-old patient with Sickle Cell Anemia (Hb SS) is being evaluated for chronic complications. According to the Cooperative Study of Sickle Cell Disease (CSSCD), which of the following complications occurs in approximately 40% of SS patients and is a major cause of morbidity?",
+                options: {
+                    A: "Stroke",
+                    B: "Acute Chest Syndrome (ACS)",
+                    C: "Leg ulcers",
+                    D: "Retinopathy",
+                    E: "Priapism"
+                },
+                correctAnswer: "B",
+                rationale: "Acute Chest Syndrome (ACS) is a common and severe complication of Sickle Cell Disease. The provided table indicates an incidence of 40% in SS patients.",
+                source: "Hemoglobinopathies, Slides 15 & 19: \"ACS [in] SS... 40%\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO4: Describe the genetic, hematologic findings, and clinical characteristics of the main structural hemoglobin variants, i.e., HbS, HbC, HbE.",
+                fullLO: "LO4: Describe the genetic, hematologic findings, and clinical characteristics of the main structural hemoglobin variants, i.e., HbS, HbC, HbE. (Hemoglobinopathies)",
+                question: "Patients with Hb SC disease differ from those with Hb SS disease in their clinical course and complication rates. Based on the data comparing genotypes, which complication is noted to have a higher prevalence in Hb SC patients compared to Hb SS patients?",
+                options: {
+                    A: "Stroke",
+                    B: "Leg ulcers",
+                    C: "Retinopathy",
+                    D: "Acute Chest Syndrome",
+                    E: "Gallstones"
+                },
+                correctAnswer: "C",
+                rationale: "While Hb SS is generally more severe, retinopathy is more common in Hb SC disease (27%) compared to Hb SS disease (11%).",
+                source: "Hemoglobinopathies, Slide 19: \"Retinopathy – 11% of SS patients... 27% of SC patients\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO5: Describe the genetic, hematologic, and clinical differences between the various forms of alpha- and beta-thalassemias.",
+                fullLO: "LO5: Describe the genetic, hematologic, and clinical differences between the various forms of alpha- and beta-thalassemias. (Hemoglobinopathies)",
+                question: "A geneticist is reviewing the molecular defects associated with alpha-thalassemia. Unlike beta-thalassemia, which is predominantly caused by point mutations, the majority of alpha-thalassemia cases are caused by:",
+                options: {
+                    A: "Gene insertions",
+                    B: "Gene deletions",
+                    C: "Nonsense mutations",
+                    D: "Frameshift mutations",
+                    E: "Triplet repeat expansions"
+                },
+                correctAnswer: "B",
+                rationale: "Alpha-thalassemia is primarily classified by deletional types (a+ single gene deletion or a0 deletion of both genes), whereas beta-thalassemia is typically caused by point mutations affecting gene expression.",
+                source: "Hemoglobinopathies, Slide 31: \"a-Thalassemia... Deletional... a+ (single gene deletion on one chromosome)... a0 (deletion of both genes)\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO5: Describe the genetic, hematologic, and clinical differences between the various forms of alpha- and beta-thalassemias.",
+                fullLO: "LO5: Describe the genetic, hematologic, and clinical differences between the various forms of alpha- and beta-thalassemias. (Hemoglobinopathies)",
+                question: "A 9-month-old infant of Mediterranean descent presents with severe pallor, failure to thrive, and hepatosplenomegaly. Laboratory results show a Hemoglobin of 5 g/dL. Genetic testing confirms homozygosity for a beta-0 (b0) mutation. Without chronic transfusion therapy, what is the expected clinical outcome in the second decade of life?",
+                options: {
+                    A: "Spontaneous resolution of symptoms",
+                    B: "Development of mild chronic anemia",
+                    C: "Death from intractable arrhythmias or congestive heart failure",
+                    D: "Transformation to leukemia",
+                    E: "Requirement for only intermittent iron chelation"
+                },
+                correctAnswer: "C",
+                rationale: "Untreated Beta-Thalassemia Major leads to severe anemia, extramedullary hematopoiesis, and iron overload (from increased absorption even without transfusion). Death typically occurs in the second decade due to cardiac complications (arrhythmias/CHF).",
+                source: "Hemoglobinopathies, Slide 35: \"b Thalassemia Major... Death in second decade from intractable arrhythmias/CHF (untreated or under treated cases)\""
+            },
+            {
+                section: "Hemoglobinopathies",
+                maskedLO: "LO5: Describe the genetic, hematologic, and clinical differences between the various forms of alpha- and beta-thalassemias.",
+                fullLO: "LO5: Describe the genetic, hematologic, and clinical differences between the various forms of alpha- and beta-thalassemias. (Hemoglobinopathies)",
+                question: "In the pathogenesis of beta-thalassemia major, the severe anemia is caused not only by the lack of beta-globin synthesis but also by the accumulation of excess alpha-globin chains. What is the primary pathological consequence of these precipitated alpha-chain inclusions?",
+                options: {
+                    A: "Increased oxygen affinity leading to tissue hypoxia",
+                    B: "Destruction of RBCs in the marrow and spleen (ineffective erythropoiesis)",
+                    C: "Inhibition of fetal hemoglobin synthesis",
+                    D: "Formation of Hb H (beta-tetramers)",
+                    E: "Increased flexibility of the RBC membrane"
+                },
+                correctAnswer: "B",
+                rationale: "In beta-thalassemia, the unpaired alpha chains precipitate as insoluble inclusions (Heinz bodies). This causes damage to the RBC membrane, leading to the destruction of RBCs in the bone marrow (ineffective erythropoiesis) and in the spleen (hemolysis).",
+                source: "Hemoglobinopathies, Slide 33: \"Precipitation of a4 (very insoluble) destruction of RBCs in marrow, spleen\""
+            }
+        ];
+
+        // --- Core Logic ---
+        const quizRoot = document.getElementById('quiz-root');
+        const themeSelect = document.getElementById('theme-select');
+        const pinBtn = document.getElementById('pin-btn');
+        const mainHeader = document.getElementById('main-header');
+
+        function initQuiz() {
+            // Render Questions
+            let currentSection = "";
+            
+            quizData.forEach((item, index) => {
+                // Insert Section Header if needed
+                if (item.section !== currentSection) {
+                    currentSection = item.section;
+                    const sectionHeader = document.createElement('h2');
+                    sectionHeader.className = 'section-header';
+                    sectionHeader.textContent = currentSection;
+                    quizRoot.appendChild(sectionHeader);
+                }
+
+                // Create Card
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-${index}`;
+
+                // Learning Objective (Masked)
+                const loBox = document.createElement('div');
+                loBox.className = 'lo-box';
+                loBox.id = `lo-${index}`;
+                loBox.textContent = item.maskedLO;
+                card.appendChild(loBox);
+
+                // Question Text
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.textContent = `${index + 1}. ${item.question}`;
+                card.appendChild(qText);
+
+                // Options Container
+                const optionsGrid = document.createElement('div');
+                optionsGrid.className = 'options-grid';
+
+                for (const [key, value] of Object.entries(item.options)) {
+                    const label = document.createElement('label');
+                    label.className = 'option-label';
+                    
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `question-${index}`;
+                    input.value = key;
+
+                    const span = document.createElement('span');
+                    // Retain letters: A. Option Text
+                    span.textContent = `${key}. ${value}`;
+
+                    label.appendChild(input);
+                    label.appendChild(span);
+                    optionsGrid.appendChild(label);
+                }
+                card.appendChild(optionsGrid);
+
+                // Check Button
+                const btn = document.createElement('button');
+                btn.className = 'btn-check';
+                btn.textContent = 'Check Answer';
+                btn.onclick = () => checkAnswer(index);
+                card.appendChild(btn);
+
+                // Feedback Container
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+                feedback.id = `feedback-${index}`;
+                card.appendChild(feedback);
+
+                quizRoot.appendChild(card);
+            });
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('quizTheme') || 'dark';
+            changeTheme(savedTheme);
+            themeSelect.value = savedTheme;
+
+            // Load saved pin state
+            const savedPinState = localStorage.getItem('headerPinned');
+            // Default to true (pinned) if not set or if set to true
+            if (savedPinState === 'false') {
+                toggleHeader(false); 
+            } else {
+                toggleHeader(true);
+            }
+        }
+
+        function checkAnswer(index) {
+            const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+            const feedbackEl = document.getElementById(`feedback-${index}`);
+            const loEl = document.getElementById(`lo-${index}`);
+            const data = quizData[index];
+
+            if (!selected) {
+                alert("Please select an answer.");
+                return;
+            }
+
+            // Reveal LO
+            loEl.textContent = data.fullLO;
+
+            // Generate Feedback HTML
+            const isCorrect = selected.value === data.correctAnswer;
+            
+            let html = `<span class="feedback-header">${isCorrect ? "Correct!" : "Incorrect"}</span>`;
+            if (!isCorrect) {
+                html += `<div>The correct answer is <strong>${data.correctAnswer}</strong>.</div>`;
+            }
+            
+            html += `<div class="rationale"><strong>Rationale:</strong> ${data.rationale}</div>`;
+            html += `<div class="source"><strong>Source:</strong> ${data.source}</div>`;
+
+            feedbackEl.innerHTML = html;
+            feedbackEl.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedbackEl.style.display = 'block';
+        }
+
+        function changeTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            localStorage.setItem('quizTheme', themeName);
+        }
+
+        function toggleHeader(forceState) {
+            // Determine current state based on class presence
+            const isCurrentlyPinned = !mainHeader.classList.contains('unpinned');
+            
+            // If forceState is provided (boolean), use it. Otherwise toggle current state.
+            const newState = (typeof forceState === 'boolean') ? forceState : !isCurrentlyPinned;
+
+            if (newState) {
+                // Pin
+                mainHeader.classList.remove('unpinned');
+                pinBtn.classList.add('pin-active');
+                localStorage.setItem('headerPinned', 'true');
+            } else {
+                // Unpin
+                mainHeader.classList.add('unpinned');
+                pinBtn.classList.remove('pin-active');
+                localStorage.setItem('headerPinned', 'false');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', initQuiz);
+
+    </script>
+</body>
+</html>
